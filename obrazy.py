@@ -1,4 +1,21 @@
 #!/usr/bin/python3
+#
+# Copyright (C) 2017 Łukasz Kopacz
+#
+# This file is part of Pocztowy konwerter.
+#
+# Pocztowy konwerter is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Pocztowy konwerter is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Pocztowy konwerter. If not, see <http://www.gnu.org/licenses/>.
 
 images = [
     'R0lGODlhYAGyAOeIAAAAAAAAKQAATioAAE8AAE8AKQApTgApcE8pAHEpAABOcABOj1FRUVFRcVFRj5FOAHFRUY9RUY9RcY9RjypwrXFwKTR1tzR1xjR101Fxq3FxcXFxj111t0F+vI9xca5wKatxUY9xq4J1t6txcU6GwKtxjzSR30+PylGPyFqPxVqP0XGPj1qP23GPq3GPyI+PcXyPxY+Pj2SWyY+Pq2eYyZmPxTSq6m+dzMiPUcyPTqWRt8iPcXSgzlqm5ciPj3mk0HGrq3GryHGtynGr4oGp0qurj4+r4lq67ramxauryMirj8ytcF3C9cSqt+KrcZi52+Krj4/IyKPA35HKynzN98+6xY/I/8jIj67KyszKj4LX6oLX/8zKreLCxuLIj8zKyuLC3//Ij5ne/+fN0avi/6Xr/+Liq//X0+LiyP/X6tnl8bbv///iq//e2//i4uXu9v/r3+rx+Mj/4v/v5cT/9fLy8sT//8j//8//98////L2+uL/4vX4++L/9ef/7uL//+f/9+f/////yP//4v//6v//7v//9f//9////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH5BAEKAP8ALAAAAABgAbIAAAj+ABF9GUiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Chwo8ePIEOKHEmypMmTCRF1RMmypcuXMGPKzKhyps2bOHPq3PmwJs+fQIMKHXrRJ9GjSJMqxWl0qdOnUKMWXSnVaQ4AWLEuSMglgYApGbt+XSgWbNWzPamiXVqWq1ezF9sqlLu2LsKmdpFepTD3bd6/M/ECDip3yQCsAYR8adsV69gvhgEYQPA1C4EDWMrSXZwAK+a2lj1jGVxVMGmeewda3mr581vLX8u2xnK18uXMbzd/AHBi9wnZt2efhmp6OM7NjQHEfpv6y97UwF0vfzxw99aBZZt/SGzcafHuM5v+fwlNAfaUsr4H7k0fHfd0uJyz/n67OyvWE+CVfs//0jzBq/jNlh0AfDlHIHSv3aaZXwddtcCABfK31H4SspTefwBstdt75rVX23lvGfZeQQ/wZhgF7S343mYVwkRhiyUllxVmJSpXQWKMdaacWVcBoIBfPf44IkHJSQdWaDtytiKDMLqoVpNnsUgkkw9lUYBiUAb1YpZDiTjFan1hJlEO1HG505ZmBlVfkgjVh59EXqZ55pNy1mmnTmjeqeeeJNWk0p+ABirooIQWauihiCaq6KKMNuroo5BGKumklFZqqUCXZqrpppx26umnoIYa6heilmrqqaimquqql5LK6qv+sMYq66y0KupqrbjmquuuvEp6a6/ABivssLH+SuyxyCarrK/LNuvss9BiGu201FZbq7HWZqvttp1iy+234Ia7qLfilmtuueSeq+661f7Khgt/7kCGICH8Qagbf4QxxKP66svuvwBb6i68KslrKL357gupvwE37DCjA8dLBg4MMIACDgqHgYITFus7CAhDfMxABnuUcIcTQ9DrRcUO3NFvyCA/LPPMgUZcMBmIDDLCvBPcofO89YYBhAQ4o4wIylCQocQMZhih8dFW9Ds0zjRXLbPNiBiMgxUqbf0uIgiHwUADOBv8bhhBJOHDFVHv60TbYpNt9dwN/ypIz2D3bLT+Su8aHHbK9RqNsiAeGAHFBi67DTfg9tLtuLrGil2xFYJEULHcO7Rg78co+OsECiJnYO/WYYju+eJHo/D46ugy+jHXrMcuO6DpCiq26rPnHnvtuvfeO+++B787oXUUb/zxyCev/PLMN+/889BHL/301Fdv/fXYZ6/99twrfyi53Ycv/vjkl2/++einH/73xKvv/vvwxy///PRLz/6g9eev//789++/8fcT1P8GSMACGvCAzgtgoBDIwAY68IHuUyCgIEjBClrwgs+T4J8wyMEOepCBGlTJ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',
@@ -16,7 +33,7 @@ images = [
 ]
 
 img_description = [
-    'Zaloguj się na stronie Elektronicznego Nadawcy "https://e-nadawca.poczta-polska.pl/".',
+    'Zaloguj się na stronie Elektronicznego Nadawcy \n"https://e-nadawca.poczta-polska.pl/".',
     'Wybierz z menu po lewej stronie "Odebrane" lub "Archiwum".',
     'Kliknij w poszukiwany zbiór.',
     'Naciśnij przycisk "Pobierz (XML)".',
@@ -25,7 +42,26 @@ img_description = [
     'Wybierz plik w programie Pocztowy konwerter.',
     'Naciśnij przycisk "Konwertuj"',
     'Po konwersji zostanie utworzony nowy plik (z dopiskiem "_wynik").',
-    'Powróć do Elektronicznego Nadawcy i z menu "Import" wybierz "Import przesyłek z pliku xls".',
+    'Powróć do Elektronicznego Nadawcy \ni z menu "Import" wybierz "Import przesyłek z pliku xls".',
     'Wybierz utworzony plik, odpowiedni rodzaj przesyłki oraz nowy zbiór.',
     'Naciśnij przysk "Importuj".'
 ]
+
+license_txt = '''Pocztowy konwerter jest wolnym oprogramowaniem: możesz go
+rozprowadzać dalej i/lub modyfikować na warunkach 
+Powszechnej Licencji Publicznej GNU, wydanej przez Fundację 
+Wolnego Oprogramowania - według wersji 3 tej Licencji 
+lub (według twojego wyboru) którejś z późniejszych wersji.
+
+Pocztowy konwerter rozpowszechniany jest z nadzieją, iż
+będzie on użyteczny - jednak BEZ JAKIEJKOLWIEK GWARANCJI, 
+nawet domyślnej gwarancji PRZYDATNOŚCI HANDLOWEJ 
+albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. W celu 
+uzyskania bliższych informacji sięgnij do Powszechnej 
+Licencji Publicznej GNU.
+
+Z pewnością wraz z Pocztowym konwerterem otrzymałeś także 
+egzemplarz Powszechnej Licencji Publicznej GNU (GNU General 
+Public License). Jeśli nie - zobacz 
+<http://www.gnu.org/licenses/>.
+'''

@@ -1,4 +1,21 @@
 #!/usr/bin/python3
+#
+# Copyright (C) 2017 Łukasz Kopacz
+#
+# This file is part of Pocztowy konwerter.
+#
+# Pocztowy konwerter is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Pocztowy konwerter is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Pocztowy konwerter. If not, see <http://www.gnu.org/licenses/>.
 
 import xlwt
 import xml.etree.ElementTree as ET
@@ -10,13 +27,8 @@ def convert_to_template(filenamefull):
         tree = ET.parse(filenamefull)
         root = tree.getroot()
 
-
         workbook = xlwt.Workbook()
         sheet = workbook.add_sheet('Arkusz1')
-
-
-        # sheet.write(0, 0, 'NumerNadania')
-        # sheet.write(0, 1, 'AdresatNazwa')
 
         nazwy = ['NumerNadania', 'AdresatNazwa', 'AdresatNazwaCd', 'AdresatUlica', 'AdresatNumerDomu', 'AdresatNumerLokalu',
                  'AdresatKodPocztowy', 'AdresatMiejscowosc', 'AdresatKraj', 'AdresatEmail', 'AdresatMobile', 'AdresatTelefon',
@@ -59,7 +71,7 @@ def convert_to_template(filenamefull):
                 k += 1
                 # print('tag: {}    attrib: {}'.format(child2.tag, child2.attrib))
                 for child3 in child2:
-                    #print('tag: {}    attrib: {}'.format(child3.tag, child3.attrib))
+                    # print('tag: {}    attrib: {}'.format(child3.tag, child3.attrib))
                     if child3.attrib['Nazwa'] == 'Nazwa':
                         sheet.write(k, 1, child3.text)
                     if child3.attrib['Nazwa'] == 'NazwaII':
@@ -90,11 +102,6 @@ def convert_to_template(filenamefull):
                         else:
                             sheet.write(k, 28, 'N')
 
-
-
-                            #for child in root.iter('Przesylka'):
-         #   print(child.attrib)
-
         filename, file_extension = os.path.splitext(filenamefull)
         output_full = filename + '_wynik.xls'
 
@@ -113,4 +120,3 @@ def convert_to_template(filenamefull):
             return False
     except ET.ParseError:
         return -1
-
