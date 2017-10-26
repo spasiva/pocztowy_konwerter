@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Pocztowy konwerter. If not, see <http://www.gnu.org/licenses/>.
 
+__version__ = "0.1.7"
+
 import tkinter
 from tkinter.filedialog import askopenfilename
 import konwerter
@@ -62,7 +64,7 @@ class Application(tkinter.Frame):
     def choose_file(self):
         self.name = askopenfilename(
             initialdir=".",
-            filetypes=(("Plik xml", "*.xml"), ("Wszystkie pliki", "*.*")), title="Choose a file.")
+            filetypes=(("Plik zip lub xml", "*.zip *.xml"), ("Wszystkie pliki", "*.*")), title="Choose a file.")
 
         if self.name != "":
             self.label_info['text'] = 'Plik wybrany do konwersji:'
@@ -99,7 +101,8 @@ class Application(tkinter.Frame):
     def open_file_browser(self):
         d = os.path.split(self.res_file)[0]
         if sys.platform == 'win32':
-            subprocess.Popen(['start', d], shell=True)
+            #subprocess.Popen(['start', d], shell=True)
+            os.startfile(d)
 
         elif sys.platform == 'darwin':
             subprocess.Popen(['open', d])
@@ -113,7 +116,7 @@ class Application(tkinter.Frame):
     def help(self):
         top_help = tkinter.Toplevel(self)
         top_help.wm_title('Pomoc')
-        top_help.geometry("800x700")
+        top_help.geometry("800x650")
 
         self.label_help_text = tkinter.Label(top_help, text=obrazy.img_description[0])
         self.label_help_text.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True, padx=5, pady=5)
@@ -172,8 +175,9 @@ class Application(tkinter.Frame):
         top_about = tkinter.Toplevel(self)
         top_about.wm_title('O programie')
 
-        text_about_text = 'Pocztowy konwerter\nWersja 0.1.6\n\n' \
-                          'Licencja\nGNU General Public License v3.0'
+        text_about_text = ('Pocztowy konwerter\n Wersja {}\n\n '
+                           'Licencja\nGNU General Public License v3.0'
+                           .format(__version__))
 
         label_help_text = tkinter.Label(top_about, text=text_about_text)
         label_help_text.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True, padx=5, pady=5)
@@ -220,7 +224,7 @@ class Application(tkinter.Frame):
         return click
 
 root = tkinter.Tk()
-root.geometry("350x120")
+root.geometry("470x120")
 
 app = Application(root)
 
