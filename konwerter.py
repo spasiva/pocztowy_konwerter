@@ -20,47 +20,56 @@
 import xlwt
 import xml.etree.ElementTree as ET
 import os
+import zipfile
+
+
+nazwy = ['NumerNadania', 'AdresatNazwa', 'AdresatNazwaCd', 'AdresatUlica', 'AdresatNumerDomu', 'AdresatNumerLokalu',
+         'AdresatKodPocztowy', 'AdresatMiejscowosc', 'AdresatKraj', 'AdresatEmail', 'AdresatMobile', 'AdresatTelefon',
+         'AdresatPosteRestante', 'AdresatOsobaKontaktowa', 'AdresatNIP', 'Gabaryt', 'KategoriaLubGwarancjaTerminu',
+         'Masa', 'KwotaPobrania', 'NRB', 'TytulPobrania', 'SprawdzenieZawartosci', 'Wartosc', 'Ubezpieczenie',
+         'GodzinaDoreczenia', 'Ostroznie', 'Uwagi', 'Zawartosc', 'PotwierdzenieOdbioru',
+         'ElektronicznePotwierdzenieOdbioru', 'OdbiorWPunkcie', 'OdbiorNazwa', 'OdbiorNazwaCd', 'OdbiorUlica',
+         'OdbiorNumerDomu', 'OdbiorNumerLokalu', 'OdbiorKodPocztowy', 'OdbiorMiejscowosc', 'OdbiorOsobaKontaktowa',
+         'DoreczenieNazwa', 'DoreczenieNazwaCd', 'DoreczenieUlica', 'DoreczenieNumerDomu', 'DoreczenieNumerLokalu',
+         'DoreczenieKodPocztowy', 'DoreczenieMiejscowosc', 'DoreczenieOsobaKontaktowa', 'Platnik', 'PlatnikNazwa',
+         'PlatnikNazwaCd', 'PlatnikUlica', 'PlatnikNumerDomu', 'PlatnikNumerLokalu', 'PlatnikKodPocztowy',
+         'PlatnikMiejscowosc', 'PlatnikNIP', 'RodzajPalety', 'SzerokoscPalety', 'DlugoscPalety', 'WysokoscPalety',
+         'IloscZwracanychPaletEuro', 'ZalaczonaFaktura', 'ZalaczonyWZ', 'ZalaczoneDokumenty', 'ZwracanaFaktura',
+         'ZwracanyWZ', 'ZwracaneDokumenty', 'DataZaladunku', 'DataDostawy', 'IdMultiPack', 'PowiadomienieNadawcy',
+         'PowiadomienieOdbiorcy', 'TypOpakowania', 'UiszczaOplate', 'Ponadgabaryt', 'DoreczenieWDzien',
+         'DoreczenieWSobote', 'OdbiorWSobote', 'DoreczenieDoRakWlasnych', 'DokumentyZwrotne',
+         'DoreczenieWNiedziele/Swieto', 'Doreczenie20:00-7:00', 'OdbiorWNiedziele/Swieto', 'Odbior20:00-7:00',
+         'Miejscowa', 'ObszarMiasto', 'DeklaracjaWaluta', 'DeklaracjaNrRefImportera', 'DeklaracjaNrTelImportera',
+         'DeklaracjaOplatyPocztowe', 'DeklaracjaUwagi', 'DeklaracjaLicencja', 'DeklaracjaSwiadectwo',
+         'DeklaracjaFaktura', 'DeklaracjaPodarunek', 'DeklaracjaDokument', 'DeklaracjaProbkaHandlowa',
+         'DeklaracjaZwrotTowaru', 'DeklaracjaTowary', 'DeklaracjaInny', 'DeklaracjaWyjasnienie',
+         'DeklaracjaOkreslenieZawartosci1', 'DeklaracjaIlosc1', 'DeklaracjaMasa1', 'DeklaracjaWartosc1',
+         'DeklaracjaNrTaryfowy1', 'DeklaracjaKrajPochodzenia1', 'DeklaracjaOkreslenieZawartosci2', 'DeklaracjaIlosc2',
+         'DeklaracjaMasa2', 'DeklaracjaWartosc2', 'DeklaracjaNrTaryfowy2', 'DeklaracjaKrajPochodzenia2',
+         'DeklaracjaOkreslenieZawartosci3', 'DeklaracjaIlosc3', 'DeklaracjaMasa3', 'DeklaracjaWartosc3',
+         'DeklaracjaNrTaryfowy3', 'DeklaracjaKrajPochodzenia3', 'DeklaracjaOkreslenieZawartosci4', 'DeklaracjaIlosc4',
+         'DeklaracjaMasa4', 'DeklaracjaWartosc4', 'DeklaracjaNrTaryfowy4', 'DeklaracjaKrajPochodzenia4',
+         'DeklaracjaOkreslenieZawartosci5', 'DeklaracjaIlosc5', 'DeklaracjaMasa5', 'DeklaracjaWartosc5',
+         'DeklaracjaNrTaryfowy5', 'DeklaracjaKrajPochodzenia5', 'MPK', 'ZasadySpecjalne',
+         'DokumentyZwrotneProfilAdresowyNazwa', 'Serwis', 'PROCEDURA_SERWIS', 'PROCEDURA_ZawartoscNazwa',
+         'PROCEDURA_ListaCzynnosciNazwa', 'numerPrzesylkiKlienta'
+         ]
 
 
 def convert_to_template(filenamefull):
     try:
-        tree = ET.parse(filenamefull)
+        zfile = zipfile.ZipFile(filenamefull, 'r')
+        xml_file = zfile.open(zfile.namelist()[0])
+
+    except zipfile.BadZipFile:
+        xml_file = filenamefull
+
+    try:
+        tree = ET.parse(xml_file)
         root = tree.getroot()
 
         workbook = xlwt.Workbook()
         sheet = workbook.add_sheet('Arkusz1')
-
-        nazwy = ['NumerNadania', 'AdresatNazwa', 'AdresatNazwaCd', 'AdresatUlica', 'AdresatNumerDomu', 'AdresatNumerLokalu',
-                 'AdresatKodPocztowy', 'AdresatMiejscowosc', 'AdresatKraj', 'AdresatEmail', 'AdresatMobile', 'AdresatTelefon',
-                 'AdresatPosteRestante', 'AdresatOsobaKontaktowa', 'AdresatNIP', 'Gabaryt', 'KategoriaLubGwarancjaTerminu',
-                 'Masa', 'KwotaPobrania', 'NRB', 'TytulPobrania', 'SprawdzenieZawartosci', 'Wartosc', 'Ubezpieczenie',
-                 'GodzinaDoreczenia', 'Ostroznie', 'Uwagi', 'Zawartosc', 'PotwierdzenieOdbioru',
-                 'ElektronicznePotwierdzenieOdbioru', 'OdbiorWPunkcie', 'OdbiorNazwa', 'OdbiorNazwaCd', 'OdbiorUlica',
-                 'OdbiorNumerDomu', 'OdbiorNumerLokalu', 'OdbiorKodPocztowy', 'OdbiorMiejscowosc', 'OdbiorOsobaKontaktowa',
-                 'DoreczenieNazwa', 'DoreczenieNazwaCd', 'DoreczenieUlica', 'DoreczenieNumerDomu', 'DoreczenieNumerLokalu',
-                 'DoreczenieKodPocztowy', 'DoreczenieMiejscowosc', 'DoreczenieOsobaKontaktowa', 'Platnik', 'PlatnikNazwa',
-                 'PlatnikNazwaCd', 'PlatnikUlica', 'PlatnikNumerDomu', 'PlatnikNumerLokalu', 'PlatnikKodPocztowy',
-                 'PlatnikMiejscowosc', 'PlatnikNIP', 'RodzajPalety', 'SzerokoscPalety', 'DlugoscPalety', 'WysokoscPalety',
-                 'IloscZwracanychPaletEuro', 'ZalaczonaFaktura', 'ZalaczonyWZ', 'ZalaczoneDokumenty', 'ZwracanaFaktura',
-                 'ZwracanyWZ', 'ZwracaneDokumenty', 'DataZaladunku', 'DataDostawy', 'IdMultiPack', 'PowiadomienieNadawcy',
-                 'PowiadomienieOdbiorcy', 'TypOpakowania', 'UiszczaOplate', 'Ponadgabaryt', 'DoreczenieWDzien',
-                 'DoreczenieWSobote', 'OdbiorWSobote', 'DoreczenieDoRakWlasnych', 'DokumentyZwrotne',
-                 'DoreczenieWNiedziele/Swieto', 'Doreczenie20:00-7:00', 'OdbiorWNiedziele/Swieto', 'Odbior20:00-7:00',
-                 'Miejscowa', 'ObszarMiasto', 'DeklaracjaWaluta', 'DeklaracjaNrRefImportera', 'DeklaracjaNrTelImportera',
-                 'DeklaracjaOplatyPocztowe', 'DeklaracjaUwagi', 'DeklaracjaLicencja', 'DeklaracjaSwiadectwo',
-                 'DeklaracjaFaktura', 'DeklaracjaPodarunek', 'DeklaracjaDokument', 'DeklaracjaProbkaHandlowa',
-                 'DeklaracjaZwrotTowaru', 'DeklaracjaTowary', 'DeklaracjaInny', 'DeklaracjaWyjasnienie',
-                 'DeklaracjaOkreslenieZawartosci1', 'DeklaracjaIlosc1', 'DeklaracjaMasa1', 'DeklaracjaWartosc1',
-                 'DeklaracjaNrTaryfowy1', 'DeklaracjaKrajPochodzenia1', 'DeklaracjaOkreslenieZawartosci2', 'DeklaracjaIlosc2',
-                 'DeklaracjaMasa2', 'DeklaracjaWartosc2', 'DeklaracjaNrTaryfowy2', 'DeklaracjaKrajPochodzenia2',
-                 'DeklaracjaOkreslenieZawartosci3', 'DeklaracjaIlosc3', 'DeklaracjaMasa3', 'DeklaracjaWartosc3',
-                 'DeklaracjaNrTaryfowy3', 'DeklaracjaKrajPochodzenia3', 'DeklaracjaOkreslenieZawartosci4', 'DeklaracjaIlosc4',
-                 'DeklaracjaMasa4', 'DeklaracjaWartosc4', 'DeklaracjaNrTaryfowy4', 'DeklaracjaKrajPochodzenia4',
-                 'DeklaracjaOkreslenieZawartosci5', 'DeklaracjaIlosc5', 'DeklaracjaMasa5', 'DeklaracjaWartosc5',
-                 'DeklaracjaNrTaryfowy5', 'DeklaracjaKrajPochodzenia5', 'MPK', 'ZasadySpecjalne',
-                 'DokumentyZwrotneProfilAdresowyNazwa', 'Serwis', 'PROCEDURA_SERWIS', 'PROCEDURA_ZawartoscNazwa',
-                 'PROCEDURA_ListaCzynnosciNazwa', 'numerPrzesylkiKlienta'
-        ]
 
         for i in range(0, len(nazwy)):
             sheet.write(0, i, nazwy[i])
@@ -118,5 +127,6 @@ def convert_to_template(filenamefull):
             return output_full
         else:
             return False
+
     except ET.ParseError:
         return -1
