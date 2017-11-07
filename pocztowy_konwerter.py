@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Pocztowy konwerter. If not, see <http://www.gnu.org/licenses/>.
 
-__version__ = "0.1.7"
+__version__ = "0.1.8"
 
 import tkinter
 from tkinter.filedialog import askopenfilename
@@ -42,6 +42,9 @@ class Application(tkinter.Frame):
     def create_widgets(self):
         self.label_info = tkinter.Label(self, text="Program gotowy do działania.")
         self.label_info.pack(fill=tkinter.BOTH, side=tkinter.TOP, padx=5, pady=5)
+
+        img_icon = tkinter.PhotoImage(data=obrazy.icon)
+        root.tk.call('wm', 'iconphoto', root._w, img_icon)
 
         self.button_result = tkinter.Button(self, text="Wybierz plik", command=self.button_result_action)
         self.button_result.pack(fill=tkinter.BOTH, side=tkinter.TOP, padx=5, pady=5)
@@ -118,6 +121,9 @@ class Application(tkinter.Frame):
         top_help.wm_title('Pomoc')
         top_help.geometry("800x650")
 
+        img_icon = tkinter.PhotoImage(data=obrazy.icon)
+        top_help.tk.call('wm', 'iconphoto', top_help._w, img_icon)
+
         self.label_help_text = tkinter.Label(top_help, text=obrazy.img_description[0])
         self.label_help_text.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True, padx=5, pady=5)
         self.label_help_text.config(font='-size 14')
@@ -175,6 +181,9 @@ class Application(tkinter.Frame):
         top_about = tkinter.Toplevel(self)
         top_about.wm_title('O programie')
 
+        img_icon = tkinter.PhotoImage(data=obrazy.icon)
+        top_about.tk.call('wm', 'iconphoto', top_about._w, img_icon)
+
         text_about_text = ('Pocztowy konwerter\n Wersja {}\n\n '
                            'Licencja\nGNU General Public License v3.0'
                            .format(__version__))
@@ -200,6 +209,9 @@ class Application(tkinter.Frame):
         top_license = tkinter.Toplevel(self)
         top_license.wm_title('Licencja')
         #top_license.geometry("400x400")
+
+        img_icon = tkinter.PhotoImage(data=obrazy.icon)
+        top_license.tk.call('wm', 'iconphoto', top_license._w, img_icon)
 
         frame_license = tkinter.Frame(top_license)
 
