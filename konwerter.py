@@ -130,4 +130,3 @@ def convert_to_template(filenamefull):
 
     except ET.ParseError:
         return -1
-
